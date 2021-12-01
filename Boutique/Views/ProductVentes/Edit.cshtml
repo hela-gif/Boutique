@@ -1,0 +1,44 @@
+﻿@model Boutique.Models.ProductVente
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ProductVente</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProductVenteId" />
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label"></label>
+                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VenteId" class="control-label"></label>
+                <select asp-for="VenteId" class="form-control" asp-items="ViewBag.VenteId"></select>
+                <span asp-validation-for="VenteId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantiteDesi" class="control-label"></label>
+                <input asp-for="QuantiteDesi" class="form-control" />
+                <span asp-validation-for="QuantiteDesi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
