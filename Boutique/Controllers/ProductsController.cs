@@ -66,7 +66,8 @@ namespace Boutique.Controllers
             return View(product);
         }
 
-        [Authorize(Roles = "Employe")]
+        [Authorize(Roles = "Employe,Admin")]
+        
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

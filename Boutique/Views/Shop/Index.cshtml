@@ -75,9 +75,9 @@
             <!-- Amado Nav -->
             <nav class="amado-nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active"><a href="shop.html">Shop</a></li>
-                    <li><a href="product-details.html">Product</a></li>
+                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="active"><a asp-action="Shop">Shop</a></li>
+                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Shop" asp-action="Details">Product</a></li>
                     <li><a href="cart.html">Cart</a></li>
                     <li><a href="checkout.html">Checkout</a></li>
                 </ul>
@@ -246,9 +246,9 @@
                             <div class="single-product-wrapper">
                                 <!-- Product Image -->
                                 <div class="product-img">
-                                    <img src="@Html.DisplayFor(modelItem => item.ProductImg)" alt="">
+                                    <img src=@Html.DisplayFor(modelItem => item.ProductImg) alt="">
                                     <!-- Hover Thumb -->
-                                    <img class="hover-img" src="@Html.DisplayFor(modelItem => item.ProductImg)" alt="">
+                                    <img class="hover-img" src=@Html.DisplayFor(modelItem => item.ProductImg) alt="">
                                 </div>
 
                                 <!-- Product Description -->
@@ -257,7 +257,7 @@
                                     <div class="product-meta-data">
                                         <div class="line"></div>
                                         <p class="product-price"> @Html.DisplayFor(modelItem => item.ProductPrice)</p>
-                                        <a asp-action="Details" asp-route-id="@item.ProductId">
+                                        <a asp-action="Details" asp-route-id="@item.ProductId" asp-controller ="Shop">
                                             <h6> @Html.DisplayFor(modelItem => item.Name)</h6>
                                         </a>
                                     </div>
