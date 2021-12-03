@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Boutique.Data;
 using Boutique.Models;
+using Boutique.Views.Shop.SessionHelper;
 
 namespace Boutique.Controllers
 {
@@ -22,6 +24,16 @@ namespace Boutique.Controllers
         // GET: Shop
         public async Task<IActionResult> Index()
         {
+            if (SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "products") != null)
+
+            {
+                List<Product> products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "products");
+                ViewBag.cartCount = products.Count();
+            }
+            else
+            {
+                ViewBag.cartCount = 0;
+            }
             return View(await _context.Product.ToListAsync());
         }
 
@@ -48,6 +60,10 @@ namespace Boutique.Controllers
         {
             return View();
         }
+        public IActionResult Checkout()
+        {
+            return View();
+        }
 
         // POST: Shop/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -64,6 +80,47 @@ namespace Boutique.Controllers
             }
             return View(product);
         }
+
+
+        public async Task<IActionResult> ajoutPanier(int? id)
+        {
+
+            var product = await _context.Product
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+
+            List<Product> products;
+            if (SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "products") != null)
+            {
+                products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "products");
+                foreach (var p in products)
+                {
+                    if (p.ProductId == id)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+            else
+            {
+                products = new List<Product>();
+            }
+
+
+            products.Add(product);
+
+
+
+
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "products", products);
+            return RedirectToAction("Index");
+
+        }
+
 
         // GET: Shop/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -148,6 +205,10 @@ namespace Boutique.Controllers
         private bool ProductExists(int id)
         {
             return _context.Product.Any(e => e.ProductId == id);
+        }
+        public async Task<IActionResult> Cart()
+        {
+            return View();
         }
     }
 }

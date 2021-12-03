@@ -34,7 +34,7 @@ namespace Boutique
             //services.AddDbContext<BoutiqueDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BoutiqueContext")));
             //Servives Configuration
             //services.AddScoped<IProductsService, ProductsService>();
-
+            services.AddSession();
             services.AddControllersWithViews();
 
             services.AddDbContext<BoutiqueContext>(options =>
@@ -59,6 +59,8 @@ namespace Boutique
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
+           
 
             app.UseRouting();
             app.UseAuthentication();

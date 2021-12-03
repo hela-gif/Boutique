@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<Boutique.Models.Product>
+@using Boutique.Views.Shop.SessionHelper
 
 @{
     ViewData["Title"] = "Index";
 }
 
+@{ List<Product> products = SessionHelper.GetObjectFromJson<List<Product>>(Context.Session, "products"); }
 
 
 <!DOCTYPE html>
@@ -78,7 +80,7 @@
                     <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="active"><a asp-action="Shop">Shop</a></li>
                     <li><a class="nav-link text-dark" asp-area="" asp-controller="Shop" asp-action="Details">Product</a></li>
-                    <li><a href="cart.html">Cart</a></li>
+                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Shop" asp-action="Cart">Cart</a></li>
                     <li><a href="checkout.html">Checkout</a></li>
                 </ul>
             </nav>
@@ -89,7 +91,7 @@
             </div>
             <!-- Cart Menu -->
             <div class="cart-fav-search mb-100">
-                <a href="cart.html" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
+                <a  asp-area="" asp-controller="Shop" asp-action="Cart" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(@ViewBag.cartCount)</span></a>
                 <a href="#" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
                 <a href="#" class="search-nav"><img src="img/core-img/search.png" alt=""> Search</a>
             </div>
@@ -257,7 +259,7 @@
                                     <div class="product-meta-data">
                                         <div class="line"></div>
                                         <p class="product-price"> @Html.DisplayFor(modelItem => item.ProductPrice)</p>
-                                        <a asp-action="Details" asp-route-id="@item.ProductId" asp-controller ="Shop">
+                                        <a asp-action="Details" asp-route-id="@item.ProductId" asp-controller="Shop">
                                             <h6> @Html.DisplayFor(modelItem => item.Name)</h6>
                                         </a>
                                     </div>
@@ -271,16 +273,16 @@
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                         </div>
                                         <div class="cart">
-                                            <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
+                                            <a class="divAddCart" asp-controller="Shop" asp-action="ajoutPanier" asp-route-id="@item.ProductId"><img src="img/core-img/cart.png" alt=""></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>//fin image 1
 
-                        
 
-                               
+
+
                     }
                 </div>
 
